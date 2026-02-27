@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Decision Cognitive Bias Checklist | KeepRule</title>
+    <meta name="description" content="Walk through 15 cognitive bias checks before making important decisions. Spot blind spots in your thinking with this interactive checklist tool.">
+    <meta name="keywords" content="cognitive bias, decision making, checklist, critical thinking, bias detection, mental models, KeepRule">
+    <meta name="author" content="KeepRule">
+    <meta property="og:title" content="Pre-Decision Cognitive Bias Checklist | KeepRule">
+    <meta property="og:description" content="Spot blind spots in your thinking. Walk through 15 cognitive bias checks before making any important decision.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://henu-wang.github.io/bias-checklist/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pre-Decision Cognitive Bias Checklist | KeepRule">
+    <meta name="twitter:description" content="Spot blind spots in your thinking with 15 cognitive bias checks.">
+    <link rel="canonical" href="https://henu-wang.github.io/bias-checklist/">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .bias-flagged { border-left: 4px solid #f59e0b !important; background: #fffbeb !important; }
+        .bias-unsure { border-left: 4px solid #9ca3af !important; background: #f9fafb !important; }
+        .progress-ring { transition: stroke-dashoffset 0.5s ease; }
+        @media print { .no-print { display: none !important; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 no-print">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="https://keeprule.com" target="_blank" rel="noopener" class="flex items-center gap-2 text-brand-700 hover:text-brand-800 transition-colors font-bold text-lg">
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                KeepRule
+            </a>
+            <nav class="flex items-center gap-4 text-sm">
+                <a href="https://keeprule.com" target="_blank" rel="noopener" class="text-gray-500 hover:text-brand-600 transition-colors">Home</a>
+                <a href="https://keeprule.com/tools" target="_blank" rel="noopener" class="text-gray-500 hover:text-brand-600 transition-colors">Tools</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl mx-auto px-4 py-8 w-full">
+
+        <!-- Hero -->
+        <section class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Pre-Decision Cognitive Bias Checklist</h1>
+            <p class="text-gray-500 text-lg max-w-2xl mx-auto">Walk through 15 bias checks before making an important decision. Spot the blind spots your brain tries to hide.</p>
+        </section>
+
+        <!-- Decision Input -->
+        <section class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
+            <label for="decisionInput" class="block text-sm font-semibold text-gray-700 mb-2">What decision are you evaluating?</label>
+            <textarea id="decisionInput" rows="3" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-base focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none resize-none transition" placeholder="e.g. Should I accept the new job offer? Should we invest in this startup?"></textarea>
+        </section>
+
+        <!-- Running Score Bar -->
+        <div id="scoreBar" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 mb-8 flex items-center justify-between sticky top-[57px] z-40 no-print">
+            <div class="flex items-center gap-3">
+                <div class="relative w-12 h-12 flex-shrink-0">
+                    <svg class="w-12 h-12 -rotate-90" viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="#e5e7eb" stroke-width="4"/>
+                        <circle id="progressCircle" class="progress-ring" cx="24" cy="24" r="20" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+                    </svg>
+                    <span id="answeredCount" class="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-700">0/15</span>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-700"><span id="flaggedCount">0</span> out of 15 potential biases detected</p>
+                    <p class="text-xs text-gray-400" id="statusText">Answer all questions to see your results</p>
+                </div>
+            </div>
+            <button id="showResultsBtn" onclick="showResults()" class="hidden px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-lg hover:bg-brand-700 transition-colors flex-shrink-0">
+                View Results
+            </button>
+        </div>
+
+        <!-- Bias Questions -->
+        <div id="questionsContainer"></div>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="hidden fade-in">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Your Decision Quality Report</h2>
+
+                <div id="scoreDisplay" class="text-center mb-8">
+                    <div class="inline-flex flex-col items-center">
+                        <div class="relative w-32 h-32 mb-3">
+                            <svg class="w-32 h-32 -rotate-90" viewBox="0 0 128 128">
+                                <circle cx="64" cy="64" r="56" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                                <circle id="resultCircle" class="progress-ring" cx="64" cy="64" r="56" fill="none" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-dasharray="351.86" stroke-dashoffset="351.86"/>
+                            </svg>
+                            <span id="scoreValue" class="absolute inset-0 flex items-center justify-center text-3xl font-extrabold text-gray-900">0</span>
+                        </div>
+                        <p class="text-lg font-bold" id="riskLabel">Decision Quality Score</p>
+                        <p class="text-sm text-gray-500" id="riskDescription"></p>
+                    </div>
+                </div>
+
+                <div id="flaggedBiases" class="space-y-4 mb-8"></div>
+
+                <!-- Recommendations -->
+                <div id="recommendationsBox" class="bg-brand-50 border border-brand-100 rounded-xl p-5 mb-6">
+                    <h3 class="font-bold text-brand-800 mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        Recommendations
+                    </h3>
+                    <div id="recommendationsList" class="space-y-2 text-sm text-brand-800"></div>
+                    <p class="mt-4 text-xs text-brand-700">Explore more decision-making tools at <a href="https://keeprule.com" target="_blank" rel="noopener" class="underline font-semibold hover:text-brand-900">KeepRule.com</a></p>
+                </div>
+
+                <div class="flex flex-wrap gap-3 justify-center no-print">
+                    <button onclick="downloadResults()" class="px-5 py-2.5 bg-gray-800 text-white text-sm font-semibold rounded-lg hover:bg-gray-900 transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Download as Text
+                    </button>
+                    <button onclick="resetChecklist()" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                        Start Over
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto no-print">
+        <div class="max-w-4xl mx-auto px-4 py-6 text-center">
+            <p class="text-sm text-gray-500 mb-2">
+                Built by <a href="https://keeprule.com" target="_blank" rel="noopener" class="text-brand-600 font-semibold hover:text-brand-700 transition-colors">KeepRule</a> &mdash; Tools for better decisions.
+            </p>
+            <p class="text-xs text-gray-400">&copy; 2026 KeepRule. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    const biasData = [
+        {
+            category: "Information Biases",
+            icon: "\u{1F4CA}",
+            color: "blue",
+            biases: [
+                {
+                    id: "confirmation",
+                    name: "Confirmation Bias",
+                    question: "Have you primarily sought out information that supports your preferred option while ignoring contradictory evidence?",
+                    recommendation: "Actively seek out 3 strong arguments AGAINST your preferred choice. Ask someone who disagrees with you to make their best case."
+                },
+                {
+                    id: "availability",
+                    name: "Availability Heuristic",
+                    question: "Are you giving more weight to recent or vivid examples rather than looking at base rates and statistical evidence?",
+                    recommendation: "Look up actual statistics and base rates relevant to your decision. One dramatic story should not outweigh solid data."
+                },
+                {
+                    id: "anchoring",
+                    name: "Anchoring Bias",
+                    question: "Is your judgment being heavily influenced by the first piece of information you received (a number, price, or estimate)?",
+                    recommendation: "Generate your own independent estimate before looking at others. Consider the full range of possible values, not just the anchor."
+                }
+            ]
+        },
+        {
+            category: "Social Biases",
+            icon: "\u{1F465}",
+            color: "purple",
+            biases: [
+                {
+                    id: "bandwagon",
+                    name: "Bandwagon Effect",
+                    question: "Are you leaning toward this option mainly because many other people are choosing it or it feels popular?",
+                    recommendation: "Evaluate the decision on its own merits. Popularity does not equal correctness. Write down your reasons independent of what others think."
+                },
+                {
+                    id: "authority",
+                    name: "Authority Bias",
+                    question: "Are you trusting an authority figure's opinion without critically evaluating their reasoning or checking if they have relevant expertise?",
+                    recommendation: "Check whether the authority is actually an expert in THIS specific domain. Evaluate their argument, not just their credentials."
+                },
+                {
+                    id: "groupthink",
+                    name: "Groupthink",
+                    question: "Is the group around you converging on one answer without anyone playing devil's advocate or voicing dissent?",
+                    recommendation: "Assign someone the explicit role of devil's advocate. Collect anonymous opinions before group discussion to surface hidden disagreements."
+                }
+            ]
+        },
+        {
+            category: "Emotional Biases",
+            icon: "\u{1F4AD}",
+            color: "rose",
+            biases: [
+                {
+                    id: "loss_aversion",
+                    name: "Loss Aversion",
+                    question: "Are you avoiding a potentially better option primarily because you fear what you might lose, rather than weighing gains and losses equally?",
+                    recommendation: "Reframe the decision: what do you lose by NOT acting? Imagine you are advising a friend \u2014 would you give the same risk-averse advice?"
+                },
+                {
+                    id: "sunk_cost",
+                    name: "Sunk Cost Fallacy",
+                    question: "Are you continuing with this path because of time, money, or effort already invested, even though future prospects look poor?",
+                    recommendation: "Ask yourself: If I were starting fresh today with no prior investment, would I still choose this path? Only future costs and benefits matter."
+                },
+                {
+                    id: "endowment",
+                    name: "Endowment Effect",
+                    question: "Are you overvaluing something simply because you already own it or it is part of your current situation?",
+                    recommendation: "Imagine you do NOT currently have the thing in question. How much would you pay to acquire it? That reveals its true value to you."
+                }
+            ]
+        },
+        {
+            category: "Reasoning Biases",
+            icon: "\u{1F9E0}",
+            color: "amber",
+            biases: [
+                {
+                    id: "survivorship",
+                    name: "Survivorship Bias",
+                    question: "Are you basing your expectations on success stories while ignoring the much larger number of failures you never heard about?",
+                    recommendation: "Research the failure rate, not just the success stories. For every visible winner, ask: how many tried the same thing and failed?"
+                },
+                {
+                    id: "dunning_kruger",
+                    name: "Dunning-Kruger Effect",
+                    question: "Might you be overestimating your knowledge or competence in an area where you actually have limited experience?",
+                    recommendation: "Consult someone with deep expertise in this area. List what you do NOT know. The more you learn, the more you realize what you are missing."
+                },
+                {
+                    id: "hindsight",
+                    name: "Hindsight Bias",
+                    question: "Are you assuming a past outcome was predictable and using that false certainty to guide this new decision?",
+                    recommendation: "Write down your prediction and confidence level BEFORE you see the outcome. Review past predictions to calibrate your actual accuracy."
+                }
+            ]
+        },
+        {
+            category: "Action Biases",
+            icon: "\u26A1",
+            color: "teal",
+            biases: [
+                {
+                    id: "status_quo",
+                    name: "Status Quo Bias",
+                    question: "Are you favoring the current state of affairs simply because it is familiar, even though a change might be objectively better?",
+                    recommendation: "Imagine you are already in the new state. Would you switch back? If not, the status quo is not actually your best option."
+                },
+                {
+                    id: "planning_fallacy",
+                    name: "Planning Fallacy",
+                    question: "Are your time, cost, or effort estimates based on best-case scenarios rather than realistic or historical data?",
+                    recommendation: "Use reference class forecasting: find similar past projects and use their actual timelines. Add a 30-50% buffer to your estimates."
+                },
+                {
+                    id: "overconfidence",
+                    name: "Overconfidence Bias",
+                    question: "Are you more certain about the outcome than the evidence warrants? Would you bet real money at the odds your confidence implies?",
+                    recommendation: "Assign a probability to your prediction. Then ask: what would have to be true for me to be wrong? Prepare a contingency plan for that scenario."
+                }
+            ]
+        }
+    ];
+
+    const categoryColors = {
+        blue:   { header: 'text-blue-800',   badge: 'bg-blue-100 text-blue-700' },
+        purple: { header: 'text-purple-800', badge: 'bg-purple-100 text-purple-700' },
+        rose:   { header: 'text-rose-800',   badge: 'bg-rose-100 text-rose-700' },
+        amber:  { header: 'text-amber-800',  badge: 'bg-amber-100 text-amber-700' },
+        teal:   { header: 'text-teal-800',   badge: 'bg-teal-100 text-teal-700' }
+    };
+
+    let answers = {};
+
+    function allBiases() {
+        return biasData.flatMap(c => c.biases);
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        let html = '';
+        let idx = 0;
+
+        biasData.forEach((cat, catIdx) => {
+            const c = categoryColors[cat.color];
+            html += '<div class="mb-8">';
+            html += '<div class="flex items-center gap-2 mb-4">';
+            html += '<span class="text-xl">' + cat.icon + '</span>';
+            html += '<h2 class="text-lg font-bold ' + c.header + '">' + cat.category + '</h2>';
+            html += '<span class="text-xs px-2 py-0.5 rounded-full ' + c.badge + ' font-medium">' + cat.biases.length + ' checks</span>';
+            html += '</div>';
+
+            cat.biases.forEach(bias => {
+                idx++;
+                html += '<div id="card-' + bias.id + '" class="bg-white rounded-xl border border-gray-200 p-5 mb-3 transition-all duration-300">';
+                html += '<div class="flex items-start gap-3 mb-3">';
+                html += '<span class="flex-shrink-0 w-7 h-7 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-bold">' + idx + '</span>';
+                html += '<div class="flex-1">';
+                html += '<h3 class="font-semibold text-gray-900 text-sm mb-1">' + bias.name + '</h3>';
+                html += '<p class="text-gray-600 text-sm leading-relaxed">' + bias.question + '</p>';
+                html += '</div></div>';
+                html += '<div class="flex gap-3 ml-10">';
+
+                ['Yes', 'No', 'Unsure'].forEach(opt => {
+                    const val = opt.toLowerCase();
+                    let colors;
+                    if (val === 'yes') colors = 'peer-checked:bg-amber-50 peer-checked:border-amber-400 peer-checked:text-amber-700';
+                    else if (val === 'no') colors = 'peer-checked:bg-green-50 peer-checked:border-green-400 peer-checked:text-green-700';
+                    else colors = 'peer-checked:bg-gray-100 peer-checked:border-gray-400 peer-checked:text-gray-700';
+
+                    html += '<label class="flex-1 cursor-pointer">';
+                    html += '<input type="radio" name="bias_' + bias.id + '" value="' + val + '" class="peer sr-only" onchange="handleAnswer(\'' + bias.id + '\', \'' + val + '\')">';
+                    html += '<div class="text-center py-2 px-3 rounded-lg border border-gray-200 text-sm font-medium text-gray-500 transition-all ' + colors + ' hover:border-gray-300">' + opt + '</div>';
+                    html += '</label>';
+                });
+
+                html += '</div></div>';
+            });
+
+            html += '</div>';
+        });
+
+        container.innerHTML = html;
+    }
+
+    function handleAnswer(id, value) {
+        answers[id] = value;
+        const card = document.getElementById('card-' + id);
+        card.className = 'bg-white rounded-xl border border-gray-200 p-5 mb-3 transition-all duration-300';
+        if (value === 'yes') {
+            card.classList.add('bias-flagged');
+        } else if (value === 'unsure') {
+            card.classList.add('bias-unsure');
+        }
+        updateScore();
+    }
+
+    function updateScore() {
+        const total = allBiases().length;
+        const answered = Object.keys(answers).length;
+        const flagged = Object.values(answers).filter(v => v === 'yes').length;
+
+        document.getElementById('answeredCount').textContent = answered + '/' + total;
+        document.getElementById('flaggedCount').textContent = flagged;
+
+        const circumference = 2 * Math.PI * 20;
+        const offset = circumference - (answered / total) * circumference;
+        const circle = document.getElementById('progressCircle');
+        circle.setAttribute('stroke-dashoffset', offset);
+
+        const color = flagged <= 3 ? '#22c55e' : flagged <= 7 ? '#f59e0b' : '#ef4444';
+        circle.setAttribute('stroke', color);
+
+        const statusText = document.getElementById('statusText');
+        if (answered === 0) statusText.textContent = 'Answer all questions to see your results';
+        else if (answered < total) statusText.textContent = (total - answered) + ' questions remaining';
+        else statusText.textContent = 'All questions answered \u2014 view your results!';
+
+        const btn = document.getElementById('showResultsBtn');
+        if (answered === total) btn.classList.remove('hidden');
+        else btn.classList.add('hidden');
+    }
+
+    function showResults() {
+        const total = allBiases().length;
+        const flagged = Object.values(answers).filter(v => v === 'yes').length;
+        const unsure = Object.values(answers).filter(v => v === 'unsure').length;
+        const score = Math.round(((total - flagged - unsure * 0.5) / total) * 100);
+
+        const resultCircle = document.getElementById('resultCircle');
+        const circumference = 2 * Math.PI * 56;
+        const offset = circumference - (score / 100) * circumference;
+        resultCircle.setAttribute('stroke-dashoffset', circumference);
+        setTimeout(function() { resultCircle.setAttribute('stroke-dashoffset', offset); }, 100);
+
+        const sColor = score >= 80 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+        resultCircle.setAttribute('stroke', sColor);
+        document.getElementById('scoreValue').textContent = score;
+
+        const riskLabel = document.getElementById('riskLabel');
+        const riskDesc = document.getElementById('riskDescription');
+        if (score >= 80) {
+            riskLabel.textContent = 'Low Risk \u2014 Well Considered';
+            riskLabel.className = 'text-lg font-bold text-green-600';
+            riskDesc.textContent = 'Your decision-making process appears thorough. Few cognitive biases detected.';
+        } else if (score >= 50) {
+            riskLabel.textContent = 'Moderate Risk \u2014 Review Needed';
+            riskLabel.className = 'text-lg font-bold text-amber-600';
+            riskDesc.textContent = 'Several potential biases detected. Review the flagged items before proceeding.';
+        } else {
+            riskLabel.textContent = 'High Risk \u2014 Significant Bias Detected';
+            riskLabel.className = 'text-lg font-bold text-red-600';
+            riskDesc.textContent = 'Many cognitive biases may be affecting your judgment. Strongly consider revisiting your reasoning.';
+        }
+
+        const flaggedContainer = document.getElementById('flaggedBiases');
+        let fhtml = '';
+        const flaggedBiases = allBiases().filter(b => answers[b.id] === 'yes');
+        const unsureBiases = allBiases().filter(b => answers[b.id] === 'unsure');
+
+        if (flaggedBiases.length > 0) {
+            fhtml += '<h3 class="font-bold text-amber-700 text-sm mb-2 flex items-center gap-1"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg> Biases Detected (' + flaggedBiases.length + ')</h3>';
+            flaggedBiases.forEach(function(b) {
+                fhtml += '<div class="bg-amber-50 border border-amber-200 rounded-lg p-4">';
+                fhtml += '<p class="font-semibold text-amber-800 text-sm">' + b.name + '</p>';
+                fhtml += '<p class="text-amber-700 text-xs mt-1">' + b.recommendation + '</p>';
+                fhtml += '</div>';
+            });
+        }
+
+        if (unsureBiases.length > 0) {
+            fhtml += '<h3 class="font-bold text-gray-600 text-sm mb-2 mt-4 flex items-center gap-1"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Uncertain Areas (' + unsureBiases.length + ')</h3>';
+            unsureBiases.forEach(function(b) {
+                fhtml += '<div class="bg-gray-50 border border-gray-200 rounded-lg p-4">';
+                fhtml += '<p class="font-semibold text-gray-700 text-sm">' + b.name + '</p>';
+                fhtml += '<p class="text-gray-600 text-xs mt-1">' + b.recommendation + '</p>';
+                fhtml += '</div>';
+            });
+        }
+
+        if (flaggedBiases.length === 0 && unsureBiases.length === 0) {
+            fhtml = '<div class="bg-green-50 border border-green-200 rounded-lg p-5 text-center"><p class="text-green-700 font-semibold">No biases detected. Your decision-making process looks solid.</p></div>';
+        }
+
+        flaggedContainer.innerHTML = fhtml;
+
+        var recs = [];
+        if (flagged > 0) recs.push('Sleep on it. Revisit the flagged biases tomorrow with fresh eyes before making your final decision.');
+        if (flagged >= 3) recs.push('Consult a trusted advisor who has no stake in the outcome and share the flagged biases with them.');
+        if (unsure > 2) recs.push('For the items you marked "Unsure," do targeted research to resolve the uncertainty before proceeding.');
+        if (score < 50) recs.push('Consider writing a pre-mortem: imagine this decision failed badly, then list the most likely reasons why.');
+        recs.push('Use the <a href="https://keeprule.com" target="_blank" rel="noopener" class="underline font-semibold hover:text-brand-900">KeepRule decision framework</a> to structure your thinking and track outcomes over time.');
+        var recList = document.getElementById('recommendationsList');
+        recList.innerHTML = recs.map(function(r) { return '<p class="flex items-start gap-2"><span class="text-brand-600 mt-0.5">\u2022</span><span>' + r + '</span></p>'; }).join('');
+
+        var resultsSection = document.getElementById('resultsSection');
+        resultsSection.classList.remove('hidden');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function downloadResults() {
+        var decision = document.getElementById('decisionInput').value.trim() || '(No decision entered)';
+        var total = allBiases().length;
+        var flagged = Object.values(answers).filter(function(v){return v==='yes';}).length;
+        var unsure = Object.values(answers).filter(function(v){return v==='unsure';}).length;
+        var score = Math.round(((total - flagged - unsure * 0.5) / total) * 100);
+
+        var text = 'PRE-DECISION COGNITIVE BIAS CHECKLIST\n';
+        text += 'Generated by KeepRule (https://keeprule.com)\n';
+        text += '==================================================\n\n';
+        text += 'Decision: ' + decision + '\n';
+        text += 'Date: ' + new Date().toLocaleDateString() + '\n\n';
+        text += 'RESULTS\n------------------------------\n';
+        text += 'Decision Quality Score: ' + score + '/100\n';
+        text += 'Biases Detected: ' + flagged + '/' + total + '\n';
+        text += 'Uncertain: ' + unsure + '/' + total + '\n';
+        text += 'Risk Level: ' + (score >= 80 ? 'Low' : score >= 50 ? 'Moderate' : 'High') + '\n\n';
+
+        biasData.forEach(function(cat) {
+            text += '\n' + cat.category.toUpperCase() + '\n------------------------------\n';
+            cat.biases.forEach(function(b) {
+                var ans = answers[b.id] || 'unanswered';
+                var flag = ans === 'yes' ? '[FLAGGED]' : ans === 'unsure' ? '[UNSURE]' : '[OK]';
+                text += '\n' + flag + ' ' + b.name + '\n';
+                text += '  Q: ' + b.question + '\n';
+                text += '  A: ' + ans.charAt(0).toUpperCase() + ans.slice(1) + '\n';
+                if (ans === 'yes' || ans === 'unsure') {
+                    text += '  Recommendation: ' + b.recommendation + '\n';
+                }
+            });
+        });
+
+        text += '\n==================================================\n';
+        text += 'More decision-making tools at https://keeprule.com\n';
+
+        var blob = new Blob([text], { type: 'text/plain' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'bias-checklist-' + new Date().toISOString().slice(0,10) + '.txt';
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+
+    function resetChecklist() {
+        if (!confirm('Reset all answers? This cannot be undone.')) return;
+        answers = {};
+        document.getElementById('resultsSection').classList.add('hidden');
+        document.getElementById('showResultsBtn').classList.add('hidden');
+        document.getElementById('decisionInput').value = '';
+        renderQuestions();
+        updateScore();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    renderQuestions();
+    updateScore();
+    </script>
+
+</body>
+</html>
